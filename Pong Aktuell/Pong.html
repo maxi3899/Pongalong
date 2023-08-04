@@ -1,0 +1,669 @@
+<!DOCTYPE HTML>
+<html>
+
+<html lang="en">
+<head>
+    <script src="scripts.js"></script>
+    
+    <meta charset="utf-8" />
+    <title>Pong</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/vnd.microsoft.icon" href="./logo-copy.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+
+
+
+
+        
+       
+   
+         
+</head>
+
+<body id="page-top" >
+
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+
+    <div class="container" id="navGeschlossen">
+
+        <a class="navbar-brand" href="./Pong.html"><img src="./pongalong.png" alt="..." /></a>
+        <div class="nav" id="navGeschlossen">
+        <label id="label-nav" for="toggle">&#9776;</label>
+        <input type="checkbox" id="toggle">
+
+            <ul class="menu dropdown-menu" >
+                <a class="nav-item nav-link" href="#page-top">Home</a>
+                <a class="nav-item nav-link" href="#Warteschlange">Warteschlange</a>
+                <a class="nav-item nav-link" href="#Teams">Teams</a>
+                <a class="nav-item nav-link" href="#Regeln">Regeln</a>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="container collapse navbar-collapse" id="navOffen">
+
+        <a class="navbar-brand" href="#page-top"><img src="./pongalong.png" alt="..." /></a>
+        <div class="nav">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <a class="nav-item nav-link" href="#page-top">Home</a>
+                <a class="nav-item nav-link" href="#Warteschlange">Warteschlange</a>
+                <a class="nav-item nav-link" href="#Teams">Teams</a>
+                <a class="nav-item nav-link" href="#Regeln">Regeln</a>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+<body id="page-top" >
+
+<!-- Masthead-->
+<header class="masthead" >
+    <div class="container" >
+        <div class="masthead-subheading">Bock auf Pongen?</div>
+        <div class="masthead-heading text-uppercase">Let's pongalong!</div>
+        <a class="btn btn-primary btn-xl text-uppercase" href="#Warteschlange">Warteschlange</a>
+        <a class="btn btn-primary btn-xl text-uppercase" href="#Teams">Teambuilding</a>
+    </div>
+</header>
+
+
+
+<!-- Warteschlange Bereich mit Feldern, Buttons und Liste -->
+
+<div id="Warteschlange" class="sprung"> </div>
+<section class="felder">
+  <center>
+  <h1> Warteschlange </h1>
+  <section class="introtext">
+    <center>
+    <p> Kein Bock mehr auf Stress wer als nächstes spielt? Tragt euch hier ein und wisst immer, wer die nächste Runde gecalled hat! </p>
+    </center>
+  </section>
+
+<center>
+    <form>
+
+     <div class="group">
+        <label for = "namen1"> Team 1: <br/ >
+         <input  id="namen1" type="text" class="form__field" onkeyup="success()" name="Team1" placeholder="Spieler 1, Spieler 2">
+       </label>
+
+     </div>
+
+     <div class="group">
+        <label for = "namen2" > Team 2: <br/ >
+          <input  id="namen2" class="form__field" type="text" onkeyup="success()" name="Team2" placeholder="Spieler 1, Spieler 2">
+        </label>
+
+    </div>
+
+    </form>
+
+
+
+</center>
+
+<p></p>
+
+
+
+<div id="alleButtons" class="flex-parent jc-center">
+
+   <!-- <button class="btn button btn-primary"  id="button1" type="button" value="Abschicken" onclick="namenList(); namen1.value=''; namen2.value=''" disabled> Abschicken </button> -->
+
+    <button class="btn button btn-primary"  id="button1" type="button" value="Abschicken"  disabled > Abschicken </button>
+    <!-- <input class="button1"  id="button1" type="button" value="Abschicken" onclick="namenList(); namen1.value=''; namen2.value=''" disabled/> -->
+
+    <button class="btn button btn-primary" id="button2" type="button" value="Runde gespielt"> Runde gespielt </button>
+    <!-- <input class="btn button btn-primary"  type="button" value="Runde gespielt " onclick="loschen();" /> -->
+
+    <button class="btn button btn-secondary" id="buttonTeilen" type="button" value="Teilen"> Share </button>
+
+    <button class="btn button btn-secondary" id="buttonTeilenWeg" type="button" value="Teilen"> Share </button>
+
+    <button class="btn button btn-secondary" id="buttonEinfügen" type="button" value="Code einfügen"> Code einfügen </button>
+    <button class="btn button btn-secondary" id="buttonEinfügenWeg" type="button" value="Code einfügen"> Code einfügen </button>
+    
+
+</div>
+
+
+
+<!--Teilen div-->
+<div id="teilenFeld">
+
+</div>
+
+<form action="" id="form">
+<input type="text" id="formEinfügen" placeholder="Share Code einfügen">
+<button id="einfügenButton" type="button">Submit</button>
+</form>
+
+
+
+
+
+
+
+
+
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAi4c25ccxyd2oMAPA1QSUSO9fvI7anLNc",
+      authDomain: "pongalong-2a3e5.firebaseapp.com",
+      databaseURL: "https://pongalong-2a3e5-default-rtdb.firebaseio.com",
+      projectId: "pongalong-2a3e5",
+      storageBucket: "pongalong-2a3e5.appspot.com",
+      messagingSenderId: "766662733653",
+      appId: "1:766662733653:web:a4b195f9f1e9c0e5a109dc"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    import { 
+        getFirestore, doc, getDoc,getDocs, setDoc, collection, addDoc, updateDoc, 
+        deleteDoc, deleteField, serverTimestamp, onSnapshot, query, orderBy, 
+        limit, where} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
+import{
+    getAuth, onAuthStateChanged, signInAnonymously
+} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+
+
+        const db = getFirestore();
+ 
+  
+   
+        
+
+
+
+
+
+
+//--------------- References ------------------------
+
+var namebox = document.getElementById("namen1"); 
+var boxnumber = document.getElementById("namen2");
+
+var buttonTest = document.getElementById("button1");
+buttonTest.addEventListener('click', insertData);
+buttonTest.addEventListener('click', buttonReset);
+
+var buttonTest2 = document.getElementById("button2");
+buttonTest2.addEventListener('click', deleteDocument);
+
+var buttonTeilen = document.getElementById("buttonTeilen")
+buttonTeilen.addEventListener('click', teilen)
+
+var buttonTeilenWeg = document.getElementById("buttonTeilenWeg")
+buttonTeilenWeg.addEventListener('click', teilenWeg)
+
+var buttonEinfügen = document.getElementById("buttonEinfügen")
+buttonEinfügen.addEventListener('click', codeEinfügen)
+
+var buttonEinfügenWeg1 = document.getElementById("buttonEinfügenWeg")
+buttonEinfügenWeg1.addEventListener('click', codeEinfügenWeg)
+
+var buttonEinfügen2 = document.getElementById("einfügenButton")
+buttonEinfügen2.addEventListener('click', codeEinfügen2)
+
+
+
+
+
+//---------------Anmelden-------------
+
+const auth = getAuth();
+signInAnonymously(auth)
+  .then(() => {
+    
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ...
+  });
+
+  
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const uid = user.uid;
+                                                                        //hier mal checken !!!!!!!!!!!!!!
+    if(sessionStorage.getItem("uid")== undefined){
+    sessionStorage.setItem("uid", uid)}
+    console.log(uid)
+    
+  } 
+});
+
+
+
+
+
+
+
+//-------------------funktionen starten--------------
+loadMessages()
+       getLatestItem ()
+       
+  
+
+
+
+
+
+
+
+
+//-----------------------Teilen----------------------
+var teilCode = document.createElement("ul");
+function teilen(){
+
+  
+  var session = sessionStorage.getItem("uid")
+  teilCode.innerHTML = "Teile diesen Code mit deinen Freunden: " + session
+  document.getElementById("teilenFeld").appendChild(teilCode);
+
+  teilCode.setAttribute("style", "display: inline")
+  buttonTeilen.setAttribute("style", "display:none")
+  buttonTeilenWeg.setAttribute("style", "display: inline")
+    
+}
+
+
+function teilenWeg(){
+
+
+teilCode.setAttribute("style", "display: none")
+buttonTeilen.setAttribute("style", "display: inline")
+buttonTeilenWeg.setAttribute("style", "display: none")
+
+  
+}
+
+//-----------------------Code einfügen----------------------
+
+function codeEinfügen(){
+
+  let form = document.getElementById("form")
+  form.setAttribute("style", "display: inline")  
+buttonEinfügenWeg1.setAttribute("style", "display: inline")
+buttonEinfügen.setAttribute("style", "display: none")
+}
+
+function codeEinfügenWeg(){
+
+let form = document.getElementById("form")
+form.setAttribute("style", "display: none")  
+buttonEinfügenWeg1.setAttribute("style", "display: none")
+buttonEinfügen.setAttribute("style", "display: inline")
+
+
+
+}
+
+
+function codeEinfügen2(){
+
+
+let code = document.getElementById('formEinfügen').value;
+
+sessionStorage.setItem("uid", code)
+
+let form = document.getElementById("form")
+  form.setAttribute("style", "display: none")  
+
+
+}
+
+//--------------- Insert Data ------------------------
+
+async function insertData(){
+   
+var thingsRef = collection(db,sessionStorage.getItem("uid"))
+
+const docRef = await addDoc(
+    thingsRef, {
+        Name: namebox.value,
+        Number: boxnumber.value,
+        timestamp: serverTimestamp()
+        
+    }
+    
+)
+//location.reload()
+
+
+
+
+}
+
+
+
+
+
+/* ----------------- Get function -----------------
+async function getData(){
+
+   
+    const docSnap = await getDocs(collection(db, "Reihenfolge"));
+
+    docSnap.forEach((doc)=> {
+        console.log(`${doc.id} => ${doc.data().Name} => ${doc.data().Number}`);
+    })
+
+   
+
+
+
+
+}
+*/
+
+var documentId
+var text
+var name1 = document.createElement("ul");
+
+// Loads chat messages history and listens for upcoming ones.
+async function loadMessages() {
+
+    
+
+const q = query(collection(db, sessionStorage.getItem("uid")), orderBy('timestamp', 'asc'));
+const unsubscribe = onSnapshot(q, (querySnapshot) => {
+  const cities = [];
+  querySnapshot.forEach((doc) => {
+      cities.push("-" + doc.data().Name + " / " + doc.data().Number);
+       
+  });
+
+    
+
+    var platzhalter = cities.join(", ")
+
+    sessionStorage.setItem("database", cities)
+    /*
+      var name2 = platzhalter.replace(/-/g,"<li>");
+        name1.innerHTML = name2.replace(/,/g,"</li>") ;
+      
+      document.getElementById("li").appendChild(name1);
+*/
+
+        
+      sessionToPage()
+});
+
+ 
+}
+
+function sessionToPage(){
+   var platzhalter =  sessionStorage.getItem("database")
+
+
+    var name2 = platzhalter.replace(/-/g,"<li>");
+        name1.innerHTML = name2.replace(/,/g,"</li>") ;
+      
+      document.getElementById("li").appendChild(name1);
+}
+
+function getLatestItem (){
+
+    const recentMessagesQuery = query(collection(getFirestore(), sessionStorage.getItem("uid")), orderBy('timestamp', 'asc'),limit(1));
+    onSnapshot(recentMessagesQuery, function(snapshot) {
+    snapshot.docChanges().forEach(function(change) {
+
+        
+    
+        documentId = change.doc.id
+
+      
+    
+     
+
+  
+//console.log(documentId)
+    
+});
+  });
+}
+
+
+
+
+async function deleteDocument(){
+
+    var docRef = doc(db, sessionStorage.getItem("uid"), documentId)
+
+   await deleteDoc(docRef)
+
+   //location.reload()
+}
+  
+
+
+
+
+function buttonReset(){
+
+    document.getElementById("namen1").value='';
+    document.getElementById("namen2").value='';
+
+}
+
+
+
+
+
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</section>
+
+  <center>
+      <div class="liste" id="li"></div>
+  </center>
+
+<p></p>
+
+
+
+<!-- Teamauslosung mit einem Feld -->
+<div id="Teams" class="sprung"> </div>
+
+<section class="felder bg-light" id="Teams2">
+    <div class="container">
+      <center>
+      <h1> Teams </h1>
+
+
+      <p class="introtext"> Schnicken ist wegen Pegel oder Intelligenz zu kompliziert? <br> Kein Problem - lost hier eure Teammates und Gegner aus! </p>
+
+<p></p>
+<p></p>
+
+
+
+<form>
+
+<div class="group">
+    <label for = "teams1"> Name: <br >
+     <input  id="teams1" class="form__field" type="text" onkeyup="success2()" name="Team1" placeholder="Name" >
+   </label>
+
+
+ </div>
+
+</form>
+
+<p></p>
+
+<div class="flex-parent jc-center">
+
+
+<button class="btn button btn-primary"  id="button3" type="button" value="Hinzufügen" onclick="hinzufügen(); teams1.value='';" > Hinzufügen </button>
+ <!-- <input class="btn button btn-primary" id="button1" type="button" value="hinzufügen" onclick="hinzufügen();" /> -->
+
+<button class="btn button btn-primary" id="button2" type="button" value="Leeren" onclick="leeren1();"> Leeren </button>
+ <!-- <input class="btn button btn-primary" id="button2" type="button" value="leeren" onclick="leeren1();" /> -->
+
+<button class="btn button btn-primary" id="button3" type="button" value="Auslosen" onclick="auslosen();"> Auslosen </button>
+ <!-- <input class="btn button btn-primary" id="button3" type="button" value="auslosen" onclick="auslosen();" /> -->
+
+<br>
+<br>
+
+
+</div>
+
+<br>
+
+<div></div>
+
+<center>
+
+<div> <b> Namen: </b> </div>
+<div id="li"> </div>
+<div class="liste" id="namenFürAuslosung">
+
+</div>
+<br>
+<br>
+
+</center>
+
+<div> <b> Auslosung: </b> </div>
+<div  id="auslosungErgebnis" class="auslosung">
+</div>
+</div>
+
+</center>
+</center>
+</section>
+
+
+
+
+
+<!-- Regelbereich mit ausklappbaren Infos -->
+
+<div id="Regeln" class="sprung"> </div>
+
+<section>
+    <center>
+    <h1> Regeln </h1>
+
+    <p class="introtext"> Gibts mal wieder Stress wegen den Regeln? Nehmt euch unsere Vorschläge zur Hilfe. </p>
+
+  <details class="türkis">
+      <summary>Wer fängt an?</summary>
+      Das beginnende Team wird im <b> Einwerfen </b> ermittelt. Jeweils ein Spieler aus beiden Teams bekommt einen Ball. Nun wird sich in die Augen geschaut und gleichzeitig auf die andere Seite geworfen.
+      Trifft einer der Spieler, beginnt dieses Team.
+      Trifft jedoch keiner der Beiden, so wird das ganze mit den anderen Teammitgliedern wiederholt.
+  </details>
+
+  <details >
+      <summary>Wie viele Becher müssen gertrunken werden?</summary>
+      <b> 1. Normaler Treffer: </b> Der Becher, der getroffen wurde muss getrunken werden <br>
+      <b> 2. Zwei Bälle in den gleichen Becher: </b> Drei Becher müssen getrunken werden (Das trinkende Team darf bis auf den getroffenen Becher frei wählen) <br>
+      <b> 3. Treffer nach Aufsetzer: </b> Zwei Becher müssen getrunken werden (Das trinkende Team darf bis auf den getroffenen Becher frei wählen)
+  </details>
+
+  <details class="türkis">
+      <summary>Umstellen?</summary>
+      Jedes Team darf pro Runde <b> zwei Mal </b> die Aufstellung der Becher ändern. Dies muss nach dem Wurf des gegnerischen Teams und vor dem Wurf des eigenen Teams geschehen.
+      Dabei dürfen nie mehr als zwei Becher vertikal hintereinander stehen.
+  </details>
+
+  <details>
+      <summary>Balls Back?</summary>
+      Treffen beide Teammitglieder (Ob in den gleichen oder verschiedene Becher ist hier egal), bekommen diese die Bälle zurück und dürfen erneut werfen.
+  </details>
+
+  <details class="türkis">
+      <summary>On Fire?</summary>
+      <b> 1 getroffener Becher: </b> Nix besonderes <br>
+      <b> 2 getroffene Becher (hintereinander): </b> Heating Up <br>
+      <b> 3 getroffene Becher (hintereinander): </b> On Fire - der Spieler darf so oft erneut werfen, bis er nicht mehr trifft <br>
+
+  </details>
+
+  <details>
+      <summary>Pusten?</summary>
+      Aufgrund der aktuellen gesundheitlichen Situation wird <b> ohne Pusten </b> gespielt. Manchmal muss man also einfach zuschauen wie ein Ball rein geht, den man hätte retten können, sorry.
+  </details>
+
+  <details class="türkis">
+      <summary>Trickshots?</summary>
+      Kommt der Ball nach einem Wurf auf der Tischoberfläche <b> über die Hälfte des Tisches zurück </b> zum Team das geworfen hat, darf der Werfer einen Trickshot ausführen.
+      Trifft dieser Trickshot, ist er 2 Becher wert.
+  </details>
+
+  <details>
+      <summary>Was, wenn am Ende beide Teams den letzten Becher treffen?</summary>
+      Treffen beide Teammates den letzen Becher, ist das Spiel beendet. Wird der letzte Becher einmal getroffen kommt es zum auswerfen des gegerischen Teams.
+      Treffen hierbei beide Gegner, gewinnen sie. Trifft jedoch nur ein Gegner, so wird die Runde <b> mit den letzten Bechern fortgesetzt </b> als wäre nie getroffen worden.
+      (Sowas wie Unentschieden und drei weitere Becher gibts hier nich.)
+  </details>
+
+
+</center>
+</section>
+
+<p> </p>
+
+</body>
+
+
+<!-- Footer Bereich -->
+
+<footer class="footer py-4 ">
+  <center>
+            <div class="container">
+            <div>Copyright &copy; Pongalong 2021</div>
+
+                    </div>
+                    <div>
+                        <a class="nav-link footer footer-link" href="./impressum.html">Impressum</a>
+                    </div>
+                </div>
+            </div>
+
+  </center>
+</footer>
+
+</html>
